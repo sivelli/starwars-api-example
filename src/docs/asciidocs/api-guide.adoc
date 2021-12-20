@@ -1,0 +1,75 @@
+==== Links
+
+This is an example output for a service running at http://localhost:8080:
+
+==== Create Rebel
+
+.request
+include::{snippets}/create/http-request.adoc[]
+
+.response
+include::{snippets}/create/http-response.adoc[]
+
+==== Retrieve Rebel
+
+.request
+include::{snippets}/retrieve/http-request.adoc[]
+
+.response
+include::{snippets}/retrieve/http-response.adoc[]
+
+==== Update Rebel Location
+
+.request
+include::{snippets}/update-location/http-request.adoc[]
+
+.response
+include::{snippets}/update-location/http-response.adoc[]
+
+==== Indicate Traitor
+
+.request
+include::{snippets}/report-traitor/http-request.adoc[]
+
+.response
+include::{snippets}/report-traitor/http-response.adoc[]
+
+==== Trade
+
+.request
+include::{snippets}/trade/http-request.adoc[]
+
+.response
+include::{snippets}/trade/http-response.adoc[]
+
+==== Report Rebel Percentage
+
+.request
+include::{snippets}/rebel-percent/http-request.adoc[]
+
+.response
+include::{snippets}/rebel-percent/http-response.adoc[]
+
+==== Report Traitor Percentage
+
+.request
+include::{snippets}/traitor-percent/http-request.adoc[]
+
+.response
+include::{snippets}/traitor-percent/http-response.adoc[]
+
+==== Report Inventory Average
+
+.request
+include::{snippets}/inventory-average/http-request.adoc[]
+
+.response
+include::{snippets}/inventory-average/http-response.adoc[]
+
+==== Report Traitor Points
+
+.request
+include::{snippets}/traitor-points/http-request.adoc[]
+
+.response
+include::{snippets}/traitor-points/http-response.adoc[]

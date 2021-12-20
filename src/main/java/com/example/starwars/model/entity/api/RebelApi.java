@@ -13,6 +13,8 @@ public class RebelApi {
 
 	private String name;
 
+	private String gender;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = AppConfig.API_DATE_FORMAT)
 	private LocalDate birth;
 
@@ -28,12 +30,14 @@ public class RebelApi {
 	private Inventory inventory;
 
 
+
 	public RebelApi() {
 	}
 
-	public RebelApi(Integer rebelId, String name, LocalDate birth, Integer age, Location location, LocalDateTime locationUpdatedAt, Integer traitorReports, Inventory inventory) {
+	public RebelApi(Integer rebelId, String name, String gender, LocalDate birth, Integer age, Location location, LocalDateTime locationUpdatedAt, Integer traitorReports, Inventory inventory) {
 		this.rebelId = rebelId;
 		this.name = name;
+		this.gender = gender;
 		this.birth = birth;
 		this.age = age;
 		this.location = location;
@@ -56,6 +60,14 @@ public class RebelApi {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getGender() {
+		return this.gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public LocalDate getBirth() {
@@ -116,6 +128,11 @@ public class RebelApi {
 		return this;
 	}
 
+	public RebelApi gender(String gender) {
+		setGender(gender);
+		return this;
+	}
+
 	public RebelApi birth(LocalDate birth) {
 		setBirth(birth);
 		return this;
@@ -151,6 +168,7 @@ public class RebelApi {
 		return "{" +
 			" rebelId='" + getRebelId() + "'" +
 			", name='" + getName() + "'" +
+			", gender='" + getGender() + "'" +
 			", birth='" + getBirth() + "'" +
 			", age='" + getAge() + "'" +
 			", location='" + getLocation() + "'" +
@@ -159,6 +177,5 @@ public class RebelApi {
 			", inventory='" + getInventory() + "'" +
 			"}";
 	}
-
 
 }

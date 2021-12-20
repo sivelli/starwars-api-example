@@ -6,13 +6,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.example.starwars.model.entity.Inventory;
 import com.example.starwars.model.entity.InventoryItem;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@Testcontainers
+@ActiveProfiles("test-containers")
 public class InventoryTests {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 

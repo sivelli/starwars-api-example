@@ -2,14 +2,14 @@ package com.example.starwars.model.entity.db;
 
 import com.example.starwars.model.entity.InventoryItem;
 
-public class InventoryReportDB {
+public class InventoryReportOld {
 	private InventoryItem item;
 	private Long quantity;
 
-	public InventoryReportDB() {
+	public InventoryReportOld() {
 	}
 
-	public InventoryReportDB(InventoryItem item, Long quantity) {
+	public InventoryReportOld(InventoryItem item, Long quantity) {
 		this.item = item;
 		this.quantity = quantity;
 	}
@@ -30,12 +30,12 @@ public class InventoryReportDB {
 		this.quantity = quantity;
 	}
 
-	public InventoryReportDB item(InventoryItem item) {
+	public InventoryReportOld item(InventoryItem item) {
 		setItem(item);
 		return this;
 	}
 
-	public InventoryReportDB quantity(Long quantity) {
+	public InventoryReportOld quantity(Long quantity) {
 		setQuantity(quantity);
 		return this;
 	}

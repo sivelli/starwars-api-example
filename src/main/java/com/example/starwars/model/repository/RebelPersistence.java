@@ -4,6 +4,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,11 @@ import com.example.starwars.model.entity.Inventory;
 import com.example.starwars.model.entity.Rebel;
 import com.example.starwars.model.entity.db.BetrayalIndication;
 import com.example.starwars.model.entity.db.BetrayalIndicationPK;
-import com.example.starwars.model.entity.db.InventoryReportDB;
 import com.example.starwars.model.entity.db.RebelDB;
 import com.example.starwars.model.mapper.RebelMapper;
+import com.example.starwars.model.repository.RebelRepository.InventoryReportDB;
+import com.example.starwars.model.repository.RebelRepository.RebelReport;
+import com.example.starwars.service.RebelService;
 
 @Component
 public class RebelPersistence {
@@ -36,7 +39,7 @@ public class RebelPersistence {
 	public Rebel persistRebel(Rebel rebel) {
 		rebel.setRebelId(null);
 		rebel.setCreatedAt(LocalDateTime.now(clock));
-		rebel.setTraitorReports(0);
+		rebel.setTraitorReports(Objects.requireNonNullElse(rebel.getTraitorReports(), 0));
 		RebelDB rebelDb = rebelMapper.rebelToDB(rebel);
 		rebelDb = rebelRepository.save(rebelDb);
 		return rebelMapper.rebelFromDB(rebelDb);
@@ -45,7 +48,7 @@ public class RebelPersistence {
 	@Transactional
 	public Rebel updateRebel(Rebel rebel) throws RebelException {
 		if (rebel.getRebelId() == null) {
-			throw new RebelException();
+			throw new RebelException("Id Rebel missing");
 		}
 		RebelDB rebelDb = rebelMapper.rebelToDB(rebel);
 		rebelDb = rebelRepository.save(rebelDb);
@@ -71,7 +74,7 @@ public class RebelPersistence {
 
 	public Rebel getRebelFromId(Integer id) throws RebelException {
 		if (id == null) {
-			throw new RebelException();
+			throw new RebelException("Id missing");
 		}
 		try {
 			RebelDB rebelDb = rebelRepository.findById(id).orElseThrow();
@@ -80,17 +83,34 @@ public class RebelPersistence {
 
 		}
 		catch (NoSuchElementException e) {
-			throw new RebelException();
+			throw new RebelException("Rebel not found");
 		}
 	}
 
-	public Inventory getInventoryReport() {
-		List<InventoryReportDB> listInventory = rebelRepository.getInventoryReport();
-		System.out.println("listInventory=" + listInventory);
+	public Inventory getInventoryReportAll() {
+		List<InventoryReportDB> listInventory = rebelRepository.getInventoryReport(RebelService.MIN_TRAITOR_INDICATIONS);
 		Inventory inventory = new Inventory();
 		listInventory.stream().forEach(item -> inventory.addItemNoCheck(item.getItem(), item.getQuantity()));
 		return inventory;
 	}
 
+	public Inventory getInventoryReportTraitor() {
+		List<InventoryReportDB> listInventory = rebelRepository.getInventoryReport(RebelService.MIN_TRAITOR_INDICATIONS);
+		Inventory inventory = new Inventory();
+		listInventory.stream().filter(InventoryReportDB::isTraitor).forEach(item -> inventory.addItemNoCheck(item.getItem(), item.getQuantity()));
+		return inventory;
+	}
+
+	public Inventory getInventoryReportRebel() {
+		List<InventoryReportDB> listInventory = rebelRepository.getInventoryReport(RebelService.MIN_TRAITOR_INDICATIONS);
+		Inventory inventory = new Inventory();
+		listInventory.stream().filter(ir -> !ir.isTraitor()).forEach(item -> inventory.addItemNoCheck(item.getItem(), item.getQuantity()));
+		return inventory;
+	}
+
+	public RebelReport getRebelReport() {
+		RebelReport rebelReport = rebelRepository.countRebels(RebelService.MIN_TRAITOR_INDICATIONS);
+		return rebelReport;
+	}
 
 }

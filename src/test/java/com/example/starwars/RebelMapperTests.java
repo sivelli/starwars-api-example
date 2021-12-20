@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.example.starwars.model.entity.Inventory;
 import com.example.starwars.model.entity.InventoryItem;
@@ -28,6 +30,8 @@ import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@Testcontainers
+@ActiveProfiles("test-containers")
 public class RebelMapperTests {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private final static LocalDate MOCKED_NOW = LocalDate.of (2020, 8, 1);

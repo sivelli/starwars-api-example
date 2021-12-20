@@ -69,6 +69,12 @@ public class Inventory {
 		return stream().mapToLong(itemQuantity -> itemQuantity.getFirst().getPoints() * itemQuantity.getSecond()).sum();
 	}
 
+	public static Inventory merge(Inventory inventory1, Inventory inventory2) {
+		Inventory merged = new Inventory();
+		Stream.concat(inventory1.stream(), inventory2.stream()).forEach(itemQuantity -> merged.addItemNoCheck(itemQuantity.getFirst(), itemQuantity.getSecond()));
+		return merged;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
@@ -83,6 +89,21 @@ public class Inventory {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(items);
+	}
+
+	public Map<InventoryItem,Long> getItems() {
+		return this.items;
+	}
+
+	public void setItems(Map<InventoryItem,Long> items) {
+		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+			" items='" + items + "'" +
+			"}";
 	}
 
 }

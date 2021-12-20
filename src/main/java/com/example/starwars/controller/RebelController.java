@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,14 +35,16 @@ public class RebelController {
 	}
 
 	@RequestMapping(path = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody RebelApi findById(@PathVariable Integer id) {
+	public @ResponseBody RebelApi findById(@PathVariable Integer id) throws RebelException {
 		return rebelService.transformToRebelApi(rebelService.getRebelFromId(id));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody RebelApi create(@RequestBody RebelApi rebelApi) {
-		return rebelService.transformToRebelApi(rebelService.createRebelFromApi(rebelApi));
+		RebelApi rebelCreated = rebelService.transformToRebelApi(rebelService.createRebelFromApi(rebelApi));
+		System.out.println("rebelCreated=" + rebelCreated);
+		return rebelCreated;
 	}
 
 	@RequestMapping(path = "{id}/location", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)

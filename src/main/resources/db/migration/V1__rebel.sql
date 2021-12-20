@@ -16,6 +16,6 @@ create table rebel (
 create table betrayal_indication (
 	rebel_reporter INTEGER NOT NULL,
 	rebel_reported INTEGER NOT NULL,
-	created_at timestamp NOT NULL,
+	reported_at timestamp NOT NULL,
 	CONSTRAINT betrayal_indication_key PRIMARY KEY (rebel_reporter, rebel_reported)
 );

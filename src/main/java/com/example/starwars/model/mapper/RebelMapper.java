@@ -78,7 +78,9 @@ public class RebelMapper {
 
 	public JsonNode inventoryToDB(Inventory inventory) {
 		ObjectNode inventoryDB = objectMapper.createObjectNode();
-		inventory.stream().forEach(itemQuantity -> inventoryDB.put(itemQuantity.getFirst().name(), itemQuantity.getSecond()));
+		if (inventory != null) {
+			inventory.stream().forEach(itemQuantity -> inventoryDB.put(itemQuantity.getFirst().name(), itemQuantity.getSecond()));
+		}
 		return inventoryDB;
 	}
 
